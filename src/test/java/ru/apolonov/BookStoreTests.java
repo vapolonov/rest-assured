@@ -112,4 +112,30 @@ public class BookStoreTests {
         );
         step("Some UI action");
     }
+
+    @Test
+    void authorizeWithSchemeTest() {
+        String data = "{" +
+                "  \"userName\": \"alex\"," +
+                "  \"password\": \"asdsad#frew_DFS2\"" +
+                "}";
+
+        step("Generate token", () ->
+                given()
+                        .filter(customLogFilter().withCustomTemplates())
+                        .contentType("application/json")
+                        .accept("application/json")
+                        .body(data)
+                        .when()
+                        .log().uri()
+                        .log().body()
+                        .post("https://demoqa.com/Account/v1/GenerateToken")
+                        .then()
+                        .log().body()
+                        .body(matchesJsonSchemaInClasspath("schemas/GenerateTokenScheme.json"))
+                        .body("status", is("Success"))
+                        .body("result", is("User authorized successfully."))
+        );
+        step("Some UI action");
+    }
 }
