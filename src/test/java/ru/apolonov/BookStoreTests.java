@@ -8,6 +8,7 @@ import java.util.Map;
 
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
+import static io.restassured.http.ContentType.JSON;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
 import static ru.apolonov.filters.CustomLogFilter.customLogFilter;
@@ -44,18 +45,17 @@ public class BookStoreTests {
 
     @Test
     void authorizeTest() {
-        String data = "{" +
-                "  \"userName\": \"alex\"," +
-                "  \"password\": \"asdsad#frew_DFS2\"" +
-                "}";
+        //String data = "{" +
+        //        "  \"userName\": \"alex\"," +
+        //        "  \"password\": \"asdsad#frew_DFS2\"" +
+        //        "}";
 
-        // Map<String, String> data = new HashMap<>();
-        // data.put("userName", "alex");
-        // data.put("password", "asdsad#frew_DFS2");
+        Map<String, String> data = new HashMap<>();
+        data.put("userName", "alex");
+        data.put("password", "asdsad#frew_DFS2");
 
         given()
-                .contentType("application/json")
-                .accept("application/json")
+                .contentType(JSON)
                 .body(data)
                 .when()
                 .log().uri()
@@ -69,14 +69,13 @@ public class BookStoreTests {
 
     @Test
     void authorizeWithListenerTest() {
-        String data = "{" +
-                "  \"userName\": \"alex\"," +
-                "  \"password\": \"asdsad#frew_DFS2\"" +
-                "}";
+        Map<String, String> data = new HashMap<>();
+        data.put("userName", "alex");
+        data.put("password", "asdsad#frew_DFS2");
+
         given()
-                .filter(new AllureRestAssured())
+                .filter(new AllureRestAssured())  // добавляем детализацию в Allure отчет (запрос и ответ)
                 .contentType("application/json")
-                .accept("application/json")
                 .body(data)
                 .when()
                 .log().uri()
@@ -90,16 +89,14 @@ public class BookStoreTests {
 
     @Test
     void authorizeWithTemplatesTest() {
-        String data = "{" +
-                "  \"userName\": \"alex\"," +
-                "  \"password\": \"asdsad#frew_DFS2\"" +
-                "}";
+        Map<String, String> data = new HashMap<>();
+        data.put("userName", "alex");
+        data.put("password", "asdsad#frew_DFS2");
 
         step("Generate token", () ->
                 given()
-                        .filter(customLogFilter().withCustomTemplates())
+                        .filter(customLogFilter().withCustomTemplates()) //красивые шаблоны дл отчетов Allure
                         .contentType("application/json")
-                        .accept("application/json")
                         .body(data)
                         .when()
                         .log().uri()
@@ -115,10 +112,9 @@ public class BookStoreTests {
 
     @Test
     void authorizeWithSchemeTest() {
-        String data = "{" +
-                "  \"userName\": \"alex\"," +
-                "  \"password\": \"asdsad#frew_DFS2\"" +
-                "}";
+        Map<String, String> data = new HashMap<>();
+        data.put("userName", "alex");
+        data.put("password", "asdsad#frew_DFS2");
 
         step("Generate token", () ->
                 given()
@@ -132,7 +128,7 @@ public class BookStoreTests {
                         .post("https://demoqa.com/Account/v1/GenerateToken")
                         .then()
                         .log().body()
-                        .body(matchesJsonSchemaInClasspath("schemas/GenerateTokenScheme.json"))
+                        .body(matchesJsonSchemaInClasspath("schemas/GenerateTokenScheme.json")) // проверка json-схемы
                         .body("status", is("Success"))
                         .body("result", is("User authorized successfully."))
         );

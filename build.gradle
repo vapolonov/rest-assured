@@ -12,8 +12,8 @@ def junitVersion = "5.8.2",
 
 dependencies {
     testImplementation(
-            "io.rest-assured:rest-assured:4.4.0",
-            "io.rest-assured:json-schema-validator:4.3.1",
+            "io.rest-assured:rest-assured:4.5.0",
+            'io.rest-assured:json-schema-validator:4.5.0',
             "io.qameta.allure:allure-rest-assured:$allureVersion",
             "org.junit.jupiter:junit-jupiter-api:$junitVersion",
             "org.assertj:assertj-core:3.22.0")
@@ -40,7 +40,6 @@ tasks.withType(Test) {
 
     testLogging {
         lifecycle {
-//            events "started", "failed"
             events "started", "skipped", "failed", "standard_error", "standard_out"
             exceptionFormat "short"
         }

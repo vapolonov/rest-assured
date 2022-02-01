@@ -82,7 +82,7 @@ public class SelenoidTests {
         System.out.println(response.asString());
         System.out.println(response.path("total") + "");
         System.out.println(response.path("total").toString());
-        System.out.println(response.path("browser.chrome").toString());
+        System.out.println(response.path("browsers.chrome").toString());
     }
 
     @Test
