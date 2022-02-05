@@ -1,5 +1,6 @@
 package ru.apolonov;
 
+import io.qameta.allure.AllureId;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
