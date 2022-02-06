@@ -72,10 +72,10 @@ public class BookStoreWithSpecsTests {
                 .then()
                 .spec(responseSpec)
                 .extract().as(BookData.class);
-        assertEquals("9781449325862", data.getData().getIsbn());
-        assertEquals(234, data.getData().getPages());
-        assertEquals("title", data.getData().getTitle());
-        assertEquals("publishDate", data.getData().getPublishDate());
+        assertEquals("9781449325862", data.getBody().getIsbn());
+        assertEquals(234, data.getBody().getPages());
+        assertEquals("title", data.getBody().getTitle());
+        assertEquals("publishDate", data.getBody().getPublishDate());
     }
 
     @Test

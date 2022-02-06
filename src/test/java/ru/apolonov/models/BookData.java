@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BookData {
-    private Book book;
+    private Book body;
 
-    public Book getData() {
-        return book;
+    public Book getBody() {
+        return body;
     }
 
-    public void setData(Book book) {
-        this.book = book;
+    public void setBody(Book body) {
+        this.body = body;
     }
 }
